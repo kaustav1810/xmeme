@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/css/index.css" />
+    <title>Memes Feed</title>
+</head>
+<body>
+    <div class='container'>
+    <h1>Memes</h1>
+    <% memes.forEach(meme => { %>
+        <div class='meme'>
+            <h4><%= meme.name %> </h4>
+            <p><%= meme.caption %> </p>
+            <p><%= meme.url %> </p>
+        </div>
+    <% }) %>
+</div>
+</body>
+</html>
