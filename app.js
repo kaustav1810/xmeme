@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 require('dotenv').config();
 
@@ -9,6 +10,10 @@ const app = express();
 
 app.set('view engine', 'ejs');
 app.set('views', './src/pages');
+
+app.use(bodyParser.raw());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(express.urlencoded({ extended: false }));
 
@@ -26,7 +31,7 @@ mongoose
 	})
 	.then(() => {
 		// set app to listen on port 3000 for incoming requests
-		app.listen(process.env.port || 3000, (req, res) => {
+		app.listen(process.env.port || 8081, (req, res) => {
 			console.log('Server and database are running...');
 		});
 	})
