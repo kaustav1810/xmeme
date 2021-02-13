@@ -80,7 +80,7 @@ exports.addToFavourites = async (req, res) => {
 
     bookmarkMeme(id);
 
-	res.redirect('/memes');
+	res.redirect('/memes/feed');
 };
 
 exports.getFavouriteMemes = async (req, res) => {
