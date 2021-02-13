@@ -10,7 +10,7 @@
 
 chmod +x install.sh
 
-sudo ./install.sh
+./install.sh
 
 
 # 1. Run the user’s server execution steps which will bring up the server
@@ -37,20 +37,7 @@ curl --location --request GET 'http://localhost:8081/memes'
 
 
 # Execute the POST /memes endpoint using curl
-
-curl --location --request POST 'http://localhost:8081/memes' \
-
---header 'Content-Type: application/json' \
-
---data-raw '{
-
-"name": "xyz",
-
-"url": "abc.com",
-
-"caption": "This is a meme"
-
-}'
+curl --location --request POST 'http://localhost:8081/memes' --header 'Content-Type: application/json' --data-raw '{"name": "xz","url": "c.com","caption": "This is not a lplpmeme"}'
 
 
 # Execute the GET /memes endpoint using curl

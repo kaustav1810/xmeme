@@ -1,4 +1,4 @@
 #!/bin/bash
 
 #install all dependencies
-npm install
+npm run build
