@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
+const methodOverride = require('method-override');
 const mongoose = require('mongoose');
 require('dotenv').config();
 
@@ -11,6 +12,7 @@ const app = express();
 app.set('view engine', 'ejs');
 app.set('views', './src/pages');
 
+app.use(methodOverride('_method'));
 app.use(bodyParser.raw());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));

@@ -1,84 +1,135 @@
 const Meme = require('../models/Meme');
+const LocalStorage = require('node-localstorage').LocalStorage;
+let localStorage = new LocalStorage('./scratch');
 
-exports.getIndex = (req,res)=> res.render('index');
+exports.postMemeForm = (req, res) => res.render('index',{editing:false});
 
-exports.postMeme = async(req,res)=> {
+exports.postMeme = async (req, res) => {
+	const { name, caption, url } = req.body;
 
-    const {name,caption,url} = req.body;
+	if (await findDuplicates(req)) return res.sendStatus(409);
 
-    if(findDuplicates()) return res.sendStatus(409);
+	const id = await generateId();
 
+	const meme = new Meme({ id, name, caption, url });
 
-    const id = await generateId();
+	meme.save();
 
+	let newMeme = meme.toObject();
 
-    const meme = new Meme({id,name,caption,url});
+	delete newMeme._id;
 
-    meme.save();
+	console.log('meme created!');
 
-    let newMeme = meme.toObject();
+	res.send({id:id.toString()});
+};
 
-    delete newMeme._id;
+exports.getMemes = async (req, res) => {
+	const memes = (await Meme.find().sort({ field: 'asc', _id: -1 }).limit(100).select('-_id')) || [];
 
-    console.log('meme created!');
+	res.send(memes);
+};
 
-    if(req.accepts('json')){
-        res.send(newMeme);
-       }else{
-        res.redirect('/memes')
-       }
+exports.getMemesFeed = async (req, res) => {
+	const memes = (await Meme.find().sort({ field: 'asc', _id: -1 }).limit(100).select('-_id')) || [];
+
+	res.render('memes', { memes,favourites:false });
+};
+
+exports.findMeme = async (req, res) => {
+	const id = req.params.id;
+
+	try {
+		const meme = await Meme.findOne({ id }, { _id: 0 });
+		return meme ? res.json(meme) : res.sendStatus(404);
+	} catch (err) {
+		console.log(err);
+		res.sendStatus(404);
+	}
+};
+
+exports.editMeme = async (req, res) => {
+	try {
+		const newMeme = await Meme.findOneAndUpdate(
+			{ id: req.params.id },
+			{
+				caption: req.body.caption,
+				url: req.body.url
+			}
+		);
+		res.sendStatus(200);
+	} catch (err) {
+		console.log(err);
+		res.sendStatus(404);
+	}
+};
+
+exports.editMemeForm = (req, res) => {
+	res.render('index', { id: req.params.id,editing:true });
+};
+
+async function generateId() {
+	const lastRecord = await Meme.findOne().sort({ field: 'asc', _id: -1 }).limit(1);
+
+	return (lastRecord && parseInt(lastRecord.id) + 1) || 0;
 }
 
-exports.getMemes = async(req,res)=>{
-    const memes = await Meme.find().sort({field:'asc',_id:-1}).limit(100).select("-_id") || [];
+exports.addToFavourites = async (req, res) => {
+	
+    const {id} = req.params;
+
+    bookmarkMeme(id);
+
+	res.redirect('/memes');
+};
+
+exports.getFavouriteMemes = async (req, res) => {
+	
+    const favouriteMemes = await getFavourites();
+
+	res.render('memes', { memes: favouriteMemes,favourites:true });
+};
+
+exports.removeFromFavourites = async(req,res)=>{
+    const {id} = req.params;
+
+    const favouriteMemeIds = JSON.parse(localStorage.getItem('favourites') || '[]');
     
-    // if(req.accepts('json')){
-    //     return res.send(memes);
-    //    }else{
-        return res.render('memes', {memes});
-    //    }
+	
+    favouriteMemeIds.splice(favouriteMemeIds.indexOf(id),1);
 
+	localStorage.setItem('favourites',JSON.stringify(favouriteMemeIds));
+
+	res.redirect('/memes/bookmarked');
 }
 
-exports.findMeme = async(req,res)=>{
-    const id = req.params.id;
+async function findDuplicates(req) {
+	const oldMeme = await Meme.findOne({
+		$or: [ { name: req.body.name }, { caption: req.body.caption }, { url: req.body.url } ]
+	});
 
-    try{
-    const meme = await Meme.findOne({id},{_id:0});
-    return meme?res.json(meme):res.sendStatus(404);
-    }
-    catch(err){
-        console.log(err);
-        res.sendStatus(404);
-    }
+	return oldMeme;
 }
 
-exports.editMeme = async(req,res)=>{
+function bookmarkMeme(id){
+    const favouriteMemeIds = JSON.parse(localStorage.getItem('favourites') || '[]');
 
-    try{
-    const newMeme = await Meme.findOneAndUpdate({id:req.params.id},{
-        caption:req.body.caption,
-        url:req.body.url
-    });
-    res.sendStatus(200);
-}
-catch(err){
-    console.log(err);
-    res.sendStatus(404);
-}
-}
-async function generateId(){
-    const lastRecord = await Meme.findOne().sort({field:'asc',_id:-1}).limit(1);
+    if(favouriteMemeIds.includes(id)) return;
 
-    return (lastRecord && parseInt(lastRecord.id)+1) || 0;
+	favouriteMemeIds.push(id);
+
+	localStorage.setItem('favourites', JSON.stringify(favouriteMemeIds));
 }
 
-async function findDuplicates(){
-    const oldMeme = await Meme.findOne({$or: [
-        {name: req.body.name},
-        {caption: req.body.caption},
-        {url: req.body.url}
-    ]});
+async function getFavourites(){
+    const favouriteMemeIds = JSON.parse(localStorage.getItem('favourites') || '[]');
 
-    return oldMeme?true:false;
+	const favouriteMemes = await Promise.all(favouriteMemeIds.map(async (item) => {
+		const { id,name, caption, url } = await Meme.findOne({ id: item });
+
+		return { id,name, url, caption };
+
+	}));
+
+    return favouriteMemes;
 }

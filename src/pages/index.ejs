@@ -8,13 +8,36 @@
 </head>
 <body>
     <div class='container'>
-        <h1>Meme Form</h1>
-        <form class='container' method="POST" action="/memes">
-            <input type="text" placeholder="enter your name" name="name"/>
-            <input type="text" placeholder="enter meme caption" name="caption"/>
-            <input type="text" placeholder="enter meme url" name="url"/>
-            <button>Submit</button>
+        <% if (editing) { %>
+            <div class="meme-form-title"><h1>Edit Meme Form</h1></div>
+            <form class='container' method="POST" autocomplete="off" action="/memes/<%= id %>?_method=PATCH ">
+        <% }else{ %>
+        <div class="meme-form-title"><h1>Add your meme</h1></div>
+        <form class='container' method="POST" action="/memes" autocomplete="off">
+            <div class="group">      
+                <input type="text" required name="name">
+                <span class="highlight"></span>
+                <span class="bar"></span>
+                <label>Name</label>
+              </div>
+        <% } %>
+            <div class="group">      
+                <input type="text" required name="caption">
+                <span class="highlight"></span>
+                <span class="bar"></span>
+                <label>Enter Meme Caption</label>
+              </div>
+            <div class="group">      
+                <input type="text" required name="url">
+                <span class="highlight"></span>
+                <span class="bar"></span>
+                <label>Meme image URL</label>
+              </div>
+            <button id='submit-btn'>Submit</button>
         </form>
+        <div>
+            <a href='/memes/feed'><button class="meme-btn">View All Memes</button></a>
+        </div>
     </div>
     
 </body>
