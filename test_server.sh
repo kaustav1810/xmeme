@@ -3,10 +3,8 @@
 
 
 # git clone the repo
-git clone https://gitlab.crio.do/COHORT_ME_BUILDOUT_XMEME_ENROLL_1612436694845/kaustav123-kb-me_buildout_xmeme.git
 
 # cd to the cloned repo directory
-cd xmeme
 
 # Run the user’s installation steps which will install any necessary dependencies required for the server to run, with sudo permission
 
