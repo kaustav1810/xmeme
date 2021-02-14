@@ -65,6 +65,6 @@ mongoose.connect(url, {
 	console.log(Error, err.message);
   })
 
-  app.listen(process.env.port || 8081, (req, res) => {
+  app.listen(process.env.PORT || 8081, (req, res) => {
 				console.log('Server and database are running on 8081...');
 			});
