@@ -1,3 +1,7 @@
+/**
+ * Contains all database models used in the app.
+ */
+
 const mongoose = require('mongoose');
 
 const MemeSchema = mongoose.Schema({

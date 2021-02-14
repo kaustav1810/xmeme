@@ -1,0 +1,337 @@
+{
+    "swagger": "2.0",
+    "info": {
+    "version": "1.0.0", 
+    "title": "My version of Xmeme",
+    "description": "A site where you can browse through endless memes & post your own!",
+    "license": {
+    "name": "MIT",
+    "url": "https://opensource.org/licenses/MIT"
+    }
+    },
+    "host": "localhost:8081",
+    "basePath": "/",
+    "tags": [
+    {
+    "name": "Memes",
+    "description": "API for viewing memes in the database"
+    }
+    ],
+    "schemes": [
+    "http"
+    ],
+    "consumes": [
+    "application/json"
+    ],
+    "produces": [
+    "application/json",
+    "text/html"
+    ],
+
+    "paths": {
+        "/memes": {
+        "get": {
+        "tags": [
+        "Memes"
+        ],
+        "description": "Get all memes in database",
+        "produces":[
+            "application/json"
+        ],
+        "responses": {
+        "200": {
+        "description": "OK",
+        "schema": {
+            "type":"object",
+            "properties": {
+                "name": {"type": "string"},
+                "id": {"type": "string"},
+                "caption": {"type": "string"},
+                "url": {"type": "string"}
+            }
+            }
+        }
+        
+        }
+        },
+            "post": {
+            "tags": [
+            "Memes"
+            ],
+            "description": "Post a new meme",
+            "parameters": [
+                {
+                    "name": "body",
+                    "in": "body",
+                    "required": true,
+                    "description": "name, url and caption of meme",
+                    "type": "object",
+                    "schema":{
+                        "$ref":"#/definitions/postMeme"
+                    }
+                }
+            ],
+            "produces": [
+            "application/json"
+            ],
+            "responses": {
+            "200": {
+            "description": "New meme is created",
+            "schema": {
+                "type":"object",
+                "properties":{
+                    "id":{
+                        "type":"string",
+                        "description":"id of the meme created"
+                    }
+                }
+            }
+            },
+            "409":{
+                "description":"CONFLICT"
+            }
+            }
+            }
+        },
+        "/memes/{id}": {
+            "get": {
+            "tags": [
+            "Memes"
+            ],
+            "parameters": [
+               {
+                "name": "id",
+                "in": "path",
+                "required": true,
+                "description": "ID of meme that we want to find",
+                "type": "integer"
+               }
+            ],
+            "description": "Find particular meme from database",
+            "produces":[
+                "application/json"
+            ],
+            "responses": {
+            "200": {
+            "description": "OK",
+            "schema": {
+                "type":"object",
+                "properties":{
+                    "id":{"type":"string"},
+                    "name":{"type":"string"},
+                    "caption":{"type":"string"},
+                    "url":{"type":"string"}
+                        }
+                }
+            },
+            "404":{
+                "description":"NOT FOUND"
+            }
+        }
+            },
+
+            "patch": {
+                "tags": [
+                "Memes"
+                ],
+                "parameters": [
+                    {
+                     "name": "id",
+                     "in": "path",
+                     "required": true,
+                     "description": "ID of meme that we want to edit",
+                     "type": "integer"
+                    },
+                    {
+                     "name": "body",
+                     "in": "body",
+                     "required": true,
+                     "description": "new url and caption of meme",
+                     "type": "object",
+                     "schema":{
+                         "$ref":"#/definitions/updateMeme"
+                     }
+                    }
+                 ],
+                
+                 "description": "edit particular meme",
+                 "responses": {
+                 "200": {
+                 "description": "OK"
+                },
+                "404":{
+                    "description":"NOT FOUND"
+                }
+            }
+
+            },
+
+            "delete":{
+                "tags":[
+                    "Memes"
+                ],
+                "descriptions":"delete a particular meme",
+                "parameters":[
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "ID of meme that we want to delete",
+                        "type": "integer"
+                       }
+                ],
+                "responses": {
+                    "200": {
+                    "description": "OK"
+            }
+        }
+            }
+
+        },
+        "/memes/bookmarked":{
+            "get":{
+                "tags":["Memes"],
+                "produces":["text/html"],
+                "descriptions":"view bookmarked memes",
+                "responses": {
+                    "200": {
+                    "description": "OK"
+                    }
+                }
+            }
+        },
+        "/memes/feed":{
+            "get":{
+                "tags":["Memes"],
+                "produces":["text/html"],
+                "descriptions":"view memes feed",
+                "responses": {
+                    "200": {
+                    "description": "OK"
+                    }
+                }
+            }
+        },
+        "/memes/{id}/edit":{
+            "get":{
+                "tags":["Memes"],
+                "parameters":[
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "ID of meme that we want to edit",
+                        "type": "integer"
+                       }
+                ],
+                "produces":["text/html"],
+                "descriptions":"view edit meme form",
+                "responses": {
+                    "200": {
+                    "description": "OK"
+                    }
+                }
+            }
+        },
+        "/memes/{id}/bookmarked":{
+            "parameters":[
+                {
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "description": "ID of bookmarked meme that we want to delete",
+                    "type": "integer"
+                   }
+            ],
+            "get":{
+                "tags":["Memes"],
+                "produces":["text/html"],
+                "descriptions":"Bookmark a particular meme",
+                "responses": {
+                    "200": {
+                    "description": "OK"
+                    }
+                }
+            },
+            "delete":{
+                "tags":["Memes"],
+                "produces":["text/html"],
+                "descriptions":"Delete a particular meme from bookmarked category",
+                "responses": {
+                    "200": {
+                    "description": "OK"
+                    }
+                }
+            }
+        }
+    },
+         "definitions": {
+        "Meme": {
+        "required": [
+        "name",
+        "_id",
+        "caption",
+        "url"
+        ],
+        "properties": {
+        "_id": {
+        "type": "string",
+        "uniqueItems": true
+        },
+        "id": {
+        "type": "string",
+        "uniqueItems": true
+        },
+        "name": {
+        "type": "string",
+        "uniqueItems": true
+        },
+        "caption": {
+        "type": "string",
+        "uniqueItems": true
+        },
+        "url": {
+        "type": "string",
+        "uniqueItems": true
+        }
+        }
+        },
+        "postMeme":{
+            "required": [
+                "name",
+                "caption",
+                "url"
+                ],
+                "properties": {
+                "name": {
+                "type": "string",
+                "uniqueItems": true
+                },
+                "url": {
+                "type": "string",
+                "uniqueItems": true
+                },
+                "caption": {
+                "type": "string",
+                "uniqueItems": true
+                }
+            }
+        },
+        "updateMeme":{
+            "required": [
+                "caption",
+                "url"
+                ],
+                "properties": {
+                "caption": {
+                "type": "string",
+                "uniqueItems": true
+                },
+                "url": {
+                "type": "string",
+                "uniqueItems": true
+                }
+            }
+        }
+        }
+    }

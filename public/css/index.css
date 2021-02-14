@@ -66,6 +66,11 @@ form *{
 	border-radius: 20px;
 }
 
+.meme-title{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
 .meme-buttons{
 	display: flex;
 	justify-content: flex-end;

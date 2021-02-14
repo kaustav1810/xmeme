@@ -42,7 +42,12 @@
     
     <% memes.forEach(meme => { %>
         <div class='meme'>
-            <h2><%= meme.name %> </h2>
+            <div class='meme-title'>
+                <h2><%= meme.name %> </h2>
+                <form action="/memes/<%= meme.id%>?_method=DELETE" method="POST">
+                    <button>del</button>
+                </form>
+            </div>
             <p><%= meme.caption %> </p>
             <img src='<%= meme.url %>' />
             <div class='meme-buttons'>
