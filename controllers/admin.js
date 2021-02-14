@@ -77,6 +77,8 @@ exports.deleteMeme = async(req,res)=>{
 
 	await Meme.findOneAndDelete({id});
 
+	removeBookmarkedMeme(id);
+
 	res.redirect('/memes/feed');
 }
 
@@ -100,12 +102,7 @@ exports.getFavouriteMemes = async (req, res) => {
 exports.removeFromFavourites = async(req,res)=>{
     const {id} = req.params;
 
-    const favouriteMemeIds = JSON.parse(localStorage.getItem('favourites') || '[]');
-    
-	
-    favouriteMemeIds.splice(favouriteMemeIds.indexOf(id),1);
-
-	localStorage.setItem('favourites',JSON.stringify(favouriteMemeIds));
+    removeBookmarkedMeme(id);
 
 	res.redirect('/memes/bookmarked');
 }
@@ -142,14 +139,23 @@ function bookmarkMeme(id){
 
 // function to retrieve bookmarked memes from localstorage
 async function getFavourites(){
-    const favouriteMemeIds = JSON.parse(localStorage.getItem('favourites') || '[]');
-
+	const favouriteMemeIds = JSON.parse(localStorage.getItem('favourites') || '[]');
+	
 	const favouriteMemes = await Promise.all(favouriteMemeIds.map(async (item) => {
-		const { id,name, caption, url } = await Meme.findOne({ id: item });
+		const {id,name,caption,url} = await Meme.findOne({ id: item });
 
-		return { id,name, url, caption };
+		 return {id,name,caption,url};
 
 	}));
 
     return favouriteMemes;
+}
+
+function removeBookmarkedMeme(id){
+	const favouriteMemeIds = JSON.parse(localStorage.getItem('favourites') || '[]');
+    
+	
+    favouriteMemeIds.splice(favouriteMemeIds.indexOf(id),1);
+
+	localStorage.setItem('favourites',JSON.stringify(favouriteMemeIds));
 }

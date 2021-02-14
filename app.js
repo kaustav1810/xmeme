@@ -36,9 +36,17 @@ app.use(adminRoutes);
 // swaggerAPI endpoint
 app.use('/swagger-ui', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
+const url = "mongodb+srv://kaustav:crio_xmeme_2021@xmeme.kzrqj.mongodb.net/xmeme?retryWrites=true&w=majority"
+
 // connecting to the database and setting up the server
 mongoose
-	.connect(process.env.DB_HOST, {
+	// .connect(process.env.DB_HOST, {
+	// 	useCreateIndex: true,
+	// 	useUnifiedTopology: true,
+	// 	useNewUrlParser: true,
+	// 	useFindAndModify: false
+	// })
+	.connect(url, {
 		useCreateIndex: true,
 		useUnifiedTopology: true,
 		useNewUrlParser: true,

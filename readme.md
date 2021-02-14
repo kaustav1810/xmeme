@@ -27,20 +27,27 @@ This is where you can view the form for adding/editing a particular meme.
 ![Memes Form Page](./images/memes-form.png)
 
 ## Technologies
-* HTML 
-* CSS 
-* Javascript 
-* Node.js 
-* ExpressJS 
-* MongoDB 
+
+* **HTML**
+
+* **CSS**
+
+* **Javascript**
+
+* **Node.js**
+
+* **ExpressJS**
+
+* **MongoDB**
 
 ## Setup
-To run this on your local machine,simply clone the repo and "cd" into the directory:
+To run this on your local machine,simply clone the repo and **"cd"** into the directory:
+
 ```
 cd kaustav123-kb-ME_BUILDOUT_XMEME
 ```
 
-then run the "test_server.sh" file in the root directory:
+then run the **"test_server.sh"** file in the root directory:
 ```
 chmod +x test_server.sh
 
@@ -86,17 +93,26 @@ in the root directory,which will have a text file **favourites** which is essent
 
 ## Features
 List of features ready and TODOs for future development
-* Browse through memes already present in db.
-* Post your own meme.
-* Edit a particular meme.
-* Bookmark a particular meme.
-* Remove a meme from bookmarked section.
-* Delete a particular meme.
+
+* **Browse through memes already present in db.**
+
+* **Post your own meme.**
+
+* **Edit a particular meme.**
+
+* **Bookmark a particular meme.**
+
+* **Remove a meme from bookmarked section.**
+
+* **Delete a particular meme.**
 
 To-do list:
-* Ability to react to a particular meme.
-* Add user authentication.
-* sort memes based on most reacts.
+
+* **Ability to react to a particular meme.**
+
+* **Add user authentication.**
+
+* **sort memes based on most reacts.**
 
 ## Status
 Project is:  _finished_ and can be checked out at:

@@ -60,30 +60,26 @@
         <div class='meme'>
             <div class='meme-title'>
                 <h2><%= meme.name %> </h2>
-                <form action="/memes/<%= meme.id%>?_method=DELETE" method="POST">
+                <form action="/memes/<%= meme.id%><%= favourites?"/bookmarked":""%>?_method=DELETE" method="POST">
                     <button class='meme-del-btn'><i class="fas fa-trash fa-2x"></i></button>
                 </form>
             </div>
             <p><%= meme.caption %> </p>
             <img src='<%= meme.url %>' />
             <div class="<%= favourites?'meme-buttons meme-buttons-fav': 'meme-buttons'%>" >
+                
+                <% if(!favourites){ %> 
                 <a href='/memes/<%= meme.id%>/edit'>
                     <button class="<%= favourites?'edit-meme-btn edit-meme-btn-fav': 'edit-meme-btn'%>">
                         <i class="fas fa-pen"></i> Edit
                     </button>
                 </a>
-                
-                    <% if (favourites) { %>
-                        <form method="POST" action='/memes/<%= meme.id%>/bookmarked?_method=DELETE'>
-                            <button class='meme-card-btn'>
-                                <i class="fas fa-bookmark"></i> Remove from favourites
-                            </button>
-                        </form>
-                    <% }else{ %>
-        
-                        <a href='/memes/<%= meme.id%>/bookmarked'>
-                            <button class='meme-card-btn'><i class="far fa-bookmark"></i>Bookmark</button>
-                        </a>
+               
+                <a href='/memes/<%= meme.id%>/bookmarked'>
+                    <button class='meme-card-btn'>
+                        <i class="far fa-bookmark"></i>Bookmark
+                    </button>
+                </a>
                     <% } %>
                 
             </div>
