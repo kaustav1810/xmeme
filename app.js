@@ -39,21 +39,28 @@ app.use('/swagger-ui', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 const url = "mongodb+srv://kaustav:crio_xmeme_2021@xmeme.kzrqj.mongodb.net/xmeme?retryWrites=true&w=majority"
 
 // connecting to the database and setting up the server
-mongoose
-	// .connect(process.env.DB_HOST, {
-	// 	useCreateIndex: true,
-	// 	useUnifiedTopology: true,
-	// 	useNewUrlParser: true,
-	// 	useFindAndModify: false
-	// })
-	.connect(url, {
-		useNewUrlParser: true
-	})
-	.then(() => {
-		// set app to listen on port 8081 for incoming requests
-		app.listen(process.env.port || 8081, (req, res) => {
-			console.log('Server and database are running on 8081...');
-		});
+// mongoose
+// 	.connect(process.env.DB_HOST, {
+// 		useCreateIndex: true,
+// 		useUnifiedTopology: true,
+// 		useNewUrlParser: true,
+// 		useFindAndModify: false
+// 	})
+// 	.then(() => {
+// 		// set app to listen on port 8081 for incoming requests
+// 		app.listen(process.env.port || 8081, (req, res) => {
+// 			console.log('Server and database are running on 8081...');
+// 		});
 		
-	})
-	.catch((err) => console.log(err));
+// 	})
+// 	.catch((err) => console.log(err));
+
+mongoose.connect(url, {
+	useNewUrlParser: true,
+	useCreateIndex: true,
+	useUnifiedTopology: true
+  }).then(res=>{
+		  console.log("DB Connected!")
+  }).catch(err => {
+	console.log(Error, err.message);
+  })
