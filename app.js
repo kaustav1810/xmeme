@@ -47,10 +47,7 @@ mongoose
 	// 	useFindAndModify: false
 	// })
 	.connect(url, {
-		useCreateIndex: true,
-		useUnifiedTopology: true,
-		useNewUrlParser: true,
-		useFindAndModify: false
+		useNewUrlParser: true
 	})
 	.then(() => {
 		// set app to listen on port 8081 for incoming requests
