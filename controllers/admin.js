@@ -130,6 +130,7 @@ async function findDuplicates({name,caption,url}) {
 function bookmarkMeme(id){
     const favouriteMemeIds = JSON.parse(localStorage.getItem('favourites') || '[]');
 
+	//if it's already bookmarked simply return
     if(favouriteMemeIds.includes(id)) return;
 
 	favouriteMemeIds.push(id);
