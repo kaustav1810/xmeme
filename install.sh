@@ -22,10 +22,10 @@ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
 
 nvm install node
 
-#clone into the repo
-git clone git@gitlab.crio.do:COHORT_ME_BUILDOUT_XMEME_ENROLL_1612436694845/kaustav123-kb-me_buildout_xmeme.git
 
-cd kaustav123-kb-me_buildout_xmeme
+sudo apt update
+
+sudo apt install nodejs npm
 
 #install all dependencies
 npm run build
