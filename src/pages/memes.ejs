@@ -4,17 +4,22 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="/css/index.css" />
     <link rel="preconnect" href="https://fonts.gstatic.com">
-<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css" integrity="sha384-vSIIfh2YWi9wW0r9iZe7RJPrKwp6bG+s9QZMoITbCckVJqGCCRhc+ccxNcdpHuYu" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/css/index.css" />
+    <link rel="stylesheet" type="text/css" href="/css/formStyles.css" />
+    <link rel="stylesheet" type="text/css" href="/css/responsive.css" />
   
 <title>Memes Feed</title>
 </head>
 
 <body>
     <div class='container memes-feed'>
+        <%# check if any memes present in db %> 
         <% if (memes.length==0) { %>
             <div class='empty-feed'>
+                <%# check if only bookmarked memes to be rendered %> 
                 <% if (favourites) { %>
                     <p>You don't have any favourites yet<p>
                     <p>Bookmark  memes you like to see here!</p> 
@@ -22,12 +27,23 @@
                 <% }else{ %>
                 <p>Eww! Looks like the meme world has gone dry! <p>
                  <p>Let's start the fun by adding your first meme!</p> 
-                <div><a href='/'><button class="meme-btn">Let's go!</button></a></div>
+                <div><a href='/'>
+                    <button class="meme-btn">
+                <i class="fas fa-arrow-right"></i>
+                    
+                        Let's go!
+                    </button></a></div>
                 <% } %>
             </div>
         <% }else{ %>
-        <div>
-            <a href='/'><button class="meme-btn">Add a meme</button></a>
+        <div class='header-meme-btns'>
+            <a href='/'>
+                <button class="meme-btn">
+                    <i class="fas fa-plus"></i>
+                    Add a meme
+                </button>
+            </a>
+            <button id="add-meme-btn" disabled></button>
             <% if (favourites) { %>
                 <a href='/memes/feed'><button class="meme-btn">view all memes</button></a>
             <% }else{ %>
@@ -39,28 +55,34 @@
         <h1>Memes</h1>
         <hr>
     </div>
-    
+    <%# loop through the memes array and display each one in a card format %> 
     <% memes.forEach(meme => { %>
         <div class='meme'>
             <div class='meme-title'>
                 <h2><%= meme.name %> </h2>
                 <form action="/memes/<%= meme.id%>?_method=DELETE" method="POST">
-                    <button>del</button>
+                    <button class='meme-del-btn'><i class="fas fa-trash fa-2x"></i></button>
                 </form>
             </div>
             <p><%= meme.caption %> </p>
             <img src='<%= meme.url %>' />
-            <div class='meme-buttons'>
-                <a href='/memes/<%= meme.id%>/edit'><button class='meme-card-btn'>Edit</button></a>
+            <div class="<%= favourites?'meme-buttons meme-buttons-fav': 'meme-buttons'%>" >
+                <a href='/memes/<%= meme.id%>/edit'>
+                    <button class="<%= favourites?'edit-meme-btn edit-meme-btn-fav': 'edit-meme-btn'%>">
+                        <i class="fas fa-pen"></i> Edit
+                    </button>
+                </a>
                 
                     <% if (favourites) { %>
                         <form method="POST" action='/memes/<%= meme.id%>/bookmarked?_method=DELETE'>
-                            <button class='meme-card-btn'>Remove from favourites</button>
+                            <button class='meme-card-btn'>
+                                <i class="fas fa-bookmark"></i> Remove from favourites
+                            </button>
                         </form>
                     <% }else{ %>
         
                         <a href='/memes/<%= meme.id%>/bookmarked'>
-                            <button class='meme-card-btn'>Bookmark</button>
+                            <button class='meme-card-btn'><i class="far fa-bookmark"></i>Bookmark</button>
                         </a>
                     <% } %>
                 
@@ -68,6 +90,5 @@
         </div>
     <% })} %>
 </div>
-<!-- <script type="text/javascript" href="/javascripts/index.js"></script>   -->
 </body>
 </html>

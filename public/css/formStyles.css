@@ -1,0 +1,125 @@
+/* Edit/Post Meme form stylings ------------------------------- */
+.meme-form-title{
+	text-align: center;
+	font-size: 1.8rem;
+	letter-spacing: 10px;
+	line-height: 2rem;
+}
+
+#submit-btn{
+	width: 250px;
+	text-transform: uppercase;
+	color:white;
+	border: 3px solid rgb(255, 223, 43);
+}
+
+#submit-btn:hover{
+	background: rgb(255, 238, 0);
+	color: rgb(85, 79, 79);
+	letter-spacing: 4px;
+	transition: 0.3s;
+}
+
+.group 			  { 
+	position:relative;
+	margin: 0;
+	margin-bottom:2.2rem; 
+  }
+  input{
+	  color: white;
+	  margin-bottom: 0;
+	  margin-left: 0;
+	font-size:18px;
+	padding:10px 10px 10px 5px;
+	background: transparent;
+	display:block;
+	width:300px;
+	border:none;
+  }
+  input:focus 		{ outline:none; }
+  
+  /* LABEL ======================================= */
+  label 				 {
+	color:rgb(255, 255, 255);
+	margin-left: 0; 
+	font-size:20px;
+	font-weight:normal;
+	position:absolute;
+	pointer-events:none;
+	left:5px;
+	top:10px;
+	transition:0.2s ease all; 
+	-moz-transition:0.2s ease all; 
+	-webkit-transition:0.2s ease all;
+  }
+  
+  /* active state */
+  input:focus ~ label, input:valid ~ label 		{
+	top:-20px;
+	font-size:16px;
+	color:#ffffff;
+  }
+  
+  /* BOTTOM BARS ================================= */
+  .bar 	{ 
+	position:relative; 
+	display:block; 
+	width:300px;
+	margin: 0;
+}
+  .bar:before, .bar:after 	{
+	content:'';
+	height:2px; 
+	width:0;
+	bottom:1px; 
+	position:absolute;
+	background:#ffffff; 
+	transition:0.2s ease all; 
+	-moz-transition:0.2s ease all; 
+	-webkit-transition:0.2s ease all;
+  }
+  .bar:before {
+	left:50%;
+  }
+  .bar:after {
+	right:50%; 
+  }
+  
+  /* active state */
+  input:focus ~ .bar:before, input:focus ~ .bar:after {
+	width:50%;
+  }
+  
+  /* HIGHLIGHTER ================================== */
+  .highlight {
+	position:absolute;
+	height:60%; 
+	width:100px; 
+	top:25%; 
+	left:0;
+	pointer-events:none;
+	opacity:0.5;
+  }
+  
+  /* active state */
+  input:focus ~ .highlight {
+	-webkit-animation:inputHighlighter 0.3s ease;
+	-moz-animation:inputHighlighter 0.3s ease;
+	animation:inputHighlighter 0.3s ease;
+  }
+  
+  /* ANIMATIONS ================ */
+  @-webkit-keyframes inputHighlighter {
+	  from { background:#ffffff; }
+	to 	{ width:0; background:transparent; }
+  }
+  @-moz-keyframes inputHighlighter {
+	  from { background:#ffffff; }
+	to 	{ width:0; background:transparent; }
+  }
+  @keyframes inputHighlighter {
+	  from { background:#ffffff; }
+	to 	{ width:0; background:transparent; }
+  }
+
+  

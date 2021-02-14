@@ -1,5 +1,6 @@
 /**
  * Entry point of the app.
+ * @adminRoutes varaible to access all routes used in the app.
  */
 
 const express = require('express'),
@@ -21,21 +22,21 @@ app.set('views', './src/pages');
 
 // to define HTTP methods like "PUT"/"PATCH"/...
 app.use(methodOverride('_method'));
+
 app.use(bodyParser.raw());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(express.urlencoded({ extended: false }));
 
-app.use(express.static(path.join(`${__dirname}/public`)));
-
+app.use(express.static('public'));
 
 app.use(adminRoutes);
 
 // swaggerAPI endpoint
 app.use('/swagger-ui', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-// connecting to the database
+// connecting to the database and setting up the server
 mongoose
 	.connect(process.env.DB_HOST, {
 		useCreateIndex: true,

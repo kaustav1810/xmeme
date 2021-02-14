@@ -3,11 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css" integrity="sha384-vSIIfh2YWi9wW0r9iZe7RJPrKwp6bG+s9QZMoITbCckVJqGCCRhc+ccxNcdpHuYu" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="/css/index.css" />
+    <link rel="stylesheet" type="text/css" href="/css/formStyles.css" />
+    <link rel="stylesheet" type="text/css" href="/css/responsive.css" />
+  
     <title>Home Page</title>
 </head>
 <body>
     <div class='container'>
+        <%# check whether to display form for posting a new meme or editing an existing meme %> 
         <% if (editing) { %>
             <div class="meme-form-title"><h1>Edit Meme Form</h1></div>
             <form class='container' method="POST" autocomplete="off" action="/memes/<%= id %>?_method=PATCH ">
@@ -33,7 +40,10 @@
                 <span class="bar"></span>
                 <label>Meme image URL</label>
               </div>
-            <button id='submit-btn'>Submit</button>
+            <button id='submit-btn'>
+                <i class="fas fa-arrow-right"></i>
+                Submit
+            </button>
         </form>
         <div>
             <a href='/memes/feed'><button class="meme-btn">View All Memes</button></a>
