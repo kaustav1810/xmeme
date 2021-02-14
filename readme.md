@@ -3,12 +3,20 @@
 
 ## Table of contents
 * [General info](#general-info)
+
 * [Screenshots](#screenshots)
+
 * [Technologies](#technologies)
+
 * [Setup](#setup)
+
 * [Structure](#structure)
+
 * [Note](#note)
+
 * [Features](#features)
+
+* [API Documentation](#swagger)
 
 ## General info
 The project is built entirely on html,css and vanilla js on the frontend and
@@ -113,6 +121,10 @@ To-do list:
 * **Add user authentication.**
 
 * **sort memes based on most reacts.**
+
+## API Documentation
+All API endpoints are documented using SwaggerAPI which can be accessed at:
+http://localhost:8081/swagger-ui
 
 ## Status
 Project is:  _finished_ and can be checked out at:
