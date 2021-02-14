@@ -1,10 +1,8 @@
 
 #!/bin/bash
 
-
-# git clone the repo
-
-# cd to the cloned repo directory
+#kill existing process running on 8081
+fuser -k 8081/tcp
 
 # Run the user’s installation steps which will install any necessary dependencies required for the server to run, with sudo permission
 
@@ -37,7 +35,7 @@ curl --location --request GET 'http://localhost:8081/memes'
 
 
 # Execute the POST /memes endpoint using curl
-curl --location --request POST 'http://localhost:8081/memes' --header 'Content-Type: application/json' --data-raw '{"name": "xz","url": "c.com","caption": "This is not a lplpmeme"}'
+curl --location --request POST 'http://localhost:8081/memes' --header 'Content-Type: application/json' --data-raw '{"name": "we","url": "will","caption": "we will...rock u!!"}'
 
 
 # Execute the GET /memes endpoint using curl
